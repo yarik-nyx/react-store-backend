@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node index.js",
-    "start:dev": "node --watch index.js",
+    "start:dev": "nodemon index.js",
     "db:models": "sequelize-auto -h 127.0.0.1 -d react_store -u postgres -p 5432 -x 7777 -e postgres -o './src/models'"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "nodemon": "^3.1.1",
     "pg": "^8.11.5",
     "sequelize": "^6.37.3",
     "sequelize-auto": "^0.8.8"

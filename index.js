@@ -1,11 +1,16 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
-import {checkDbConnection} from './src/db/db.js'
-import {errorMid} from './src/middlewares/errorMid.js'
 
-import { db } from './src/db/db.js'
-import { initModels } from './src/models/init-models.js'
+import {apiRouter} from './src/routes/Api.js'
+import {coolingRouter} from './src/routes/CoolingRoute.js'
+import {motherboardRouter} from './src/routes/MotherboardRoute.js'
+import {powerSupRouter} from './src/routes/PowerSupRoute.js'
+import {processorRouter} from './src/routes/ProcessorRoute.js'
+import {ramRouter} from './src/routes/RamRoute.js'
+import {videocardRouter} from './src/routes/VideocardRoute.js'
+
+import {errorMid} from './src/middlewares/errorMid.js'
 
 
 const app = express()
@@ -13,11 +18,13 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.get('/items', async (req, res, next) => {
-    const models = initModels(db)
-    const data = await models.processors.findAll()
-    return res.status(200).json(data)
-})
+app.use('/items',apiRouter)
+app.use('/Coolings',coolingRouter)
+app.use('/Motherboards',motherboardRouter)
+app.use('/PowerSupplies',powerSupRouter)
+app.use('/Processors',processorRouter)
+app.use('/Rams',ramRouter)
+app.use('/Videocards',videocardRouter)
 
 app.use(errorMid)
 

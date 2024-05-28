@@ -64,12 +64,27 @@ function initModels(sequelize) {
   form_factors.hasMany(motherboards, { as: "motherboards", foreignKey: "form _factor_id"});
   videocards.belongsTo(interfaces, { as: "interface", foreignKey: "interface_id"});
   interfaces.hasMany(videocards, { as: "videocards", foreignKey: "interface_id"});
-  proc_let.belongsTo(letters, { as: "let", foreignKey: "let_id"});
-  letters.hasMany(proc_let, { as: "proc_lets", foreignKey: "let_id"});
-  proc_let.belongsTo(processors, { as: "proc", foreignKey: "proc_id"});
-  processors.hasMany(proc_let, { as: "proc_lets", foreignKey: "proc_id"});
-  proc_types.belongsTo(processors, { as: "proc", foreignKey: "proc_id"});
-  processors.hasMany(proc_types, { as: "proc_types", foreignKey: "proc_id"});
+
+  // proc_let.belongsTo(letters, { as: "let", foreignKey: "let_id"});
+  // letters.hasMany(proc_let, { as: "proc_lets", foreignKey: "let_id"});
+  // proc_let.belongsTo(processors, { as: "proc", foreignKey: "proc_id"});
+  // processors.hasMany(proc_let, { as: "proc_lets", foreignKey: "proc_id"});
+
+  //Many-to-Many
+  processors.belongsToMany(letters, { through: proc_let, foreignKey: "proc_id", otherKey: "let_id", primaryKey: "id"});
+  letters.belongsToMany(processors, { through: proc_let, foreignKey: "let_id", otherKey: "proc_id", primaryKey: "id"});
+
+
+  // proc_types.belongsTo(types, { as: "type", foreignKey: "type_id"});
+  // types.hasMany(proc_types, { as: "proc_types", foreignKey: "type_id"});
+  // proc_types.belongsTo(processors, { as: "proc", foreignKey: "proc_id"});
+  // processors.hasMany(proc_types, { as: "proc_types", foreignKey: "proc_id"});
+
+  //Many-to-Many
+  processors.belongsToMany(types, { through: proc_types, foreignKey: "proc_id", otherKey: "type_id", primaryKey: "id"});
+  types.belongsToMany(processors, { through: proc_types, foreignKey: "type_id", otherKey: "proc_id", primaryKey: "id"});
+
+
   power_supplies.belongsTo(ps_certificates, { as: "certificate", foreignKey: "certificate_id"});
   ps_certificates.hasMany(power_supplies, { as: "power_supplies", foreignKey: "certificate_id"});
   cooling_socket.belongsTo(sockets, { as: "socket", foreignKey: "socket_id"});
@@ -80,8 +95,7 @@ function initModels(sequelize) {
   sockets.hasMany(processors, { as: "processors", foreignKey: "socket_id"});
   cooling.belongsTo(type_cooling, { as: "type_cooling", foreignKey: "type_cooling_id"});
   type_cooling.hasMany(cooling, { as: "coolings", foreignKey: "type_cooling_id"});
-  proc_types.belongsTo(types, { as: "type", foreignKey: "type_id"});
-  types.hasMany(proc_types, { as: "proc_types", foreignKey: "type_id"});
+
   videocards.belongsTo(types_capacity, { as: "type_capacity", foreignKey: "type_capacity_id"});
   types_capacity.hasMany(videocards, { as: "videocards", foreignKey: "type_capacity_id"});
   motherboards.belongsTo(types_ram, { as: "type_ram", foreignKey: "type_ram_id"});
