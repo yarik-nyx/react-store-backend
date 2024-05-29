@@ -98,13 +98,13 @@ CREATE TABLE public.cooling (
     brand_id smallint NOT NULL,
     type_cooling_id smallint NOT NULL,
     num_fan integer,
-    heatdiss integer NOT NULL,
+    "TDP" integer NOT NULL,
     fan_size_length smallint,
     fan_size_width smallint,
     fan_size_height smallint,
-    iamgeurl character varying NOT NULL,
+    imageurl character varying NOT NULL,
     price integer,
-    raing numeric(10,2)
+    rating numeric(10,2)
 );
 
 
@@ -443,7 +443,7 @@ CREATE TABLE public.processors (
     l2_cache numeric(10,2) NOT NULL,
     l3_cache numeric(10,2) NOT NULL,
     texproc integer NOT NULL,
-    heatdis character varying NOT NULL,
+    "TDP" character varying NOT NULL,
     max_temp integer NOT NULL,
     max_frequency numeric(10,2),
     imageurl character varying NOT NULL,
@@ -734,7 +734,7 @@ CREATE TABLE public.videocards (
     brand_id smallint NOT NULL,
     videochipset_id smallint NOT NULL,
     base_frequency integer NOT NULL,
-    heatdiss integer NOT NULL,
+    "TDP" integer NOT NULL,
     video_memory_capacity integer NOT NULL,
     type_capacity_id smallint NOT NULL,
     max_power integer NOT NULL,
@@ -1013,7 +1013,7 @@ COPY public.chipsets (id, chipset) FROM stdin;
 -- Data for Name: cooling; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cooling (id, title, brand_id, type_cooling_id, num_fan, heatdiss, fan_size_length, fan_size_width, fan_size_height, iamgeurl, price, raing) FROM stdin;
+COPY public.cooling (id, title, brand_id, type_cooling_id, num_fan, "TDP", fan_size_length, fan_size_width, fan_size_height, imageurl, price, rating) FROM stdin;
 1	Deepcool LS720	15	2	39	79	120	2	250	https://avatars.mds.yandex.net/get-mpic/12490566/2a0000018db9db82f7f5b4c72dbe58b7f9c3/300x400	12599	4.90
 2	ID-Cooling ZoomFlow 3	21	2	78	78	52	1	180	https://avatars.mds.yandex.net/get-mpic/11397617/2a0000018d37cd8fa6b052a4b9d16333a351/300x400	7099	4.70
 3	Arctic Liquid Freezer II-420	22	2	400	138	38	1	420	https://avatars.mds.yandex.net/get-mpic/5232557/2a0000018be830c0457e8a8a32164d70de7d/300x400	18399	5.00
@@ -1040,6 +1040,7 @@ COPY public.cooling_socket (id, cooling_id, socket_id) FROM stdin;
 9	6	2
 10	6	3
 11	7	2
+12	1	2
 \.
 
 
@@ -1166,7 +1167,7 @@ COPY public.proc_types (id, proc_id, type_id) FROM stdin;
 -- Data for Name: processors; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.processors (id, title, brand_id, num_of_cores, num_of_threads, base_frequency, socket_id, l2_cache, l3_cache, texproc, heatdis, max_temp, max_frequency, imageurl, price, rating) FROM stdin;
+COPY public.processors (id, title, brand_id, num_of_cores, num_of_threads, base_frequency, socket_id, l2_cache, l3_cache, texproc, "TDP", max_temp, max_frequency, imageurl, price, rating) FROM stdin;
 1	Intel Core i9-10900	1	10	20	2.8 ГГц	3	25.00	24.00	14	65	95	5.20	https://avatars.mds.yandex.net/get-mpic/11240005/2a0000018ec96c24c7f8856ccbd001fd8765/300x400	32999	4.80
 2	Intel Core i7-10700	1	8	16	2.9 ГГц	1	16.00	16.00	14	65	95	4.80	https://avatars.mds.yandex.net/get-mpic/5289362/2a0000018eb42977026db843cd032d8dc928/300x400	19599	4.70
 3	Intel Core i5-10600	1	6	12	3.3 ГГц	1	12.00	12.00	14	65	95	4.80	https://c.dns-shop.ru/thumb/st4/fit/300/300/c621ffe6fedf5871c6b7c4d74a80d4fa/4fb75f6a08202ab2d862d3a4ecb871fef9e4fac141441978b00be572f79c383c.jpg	9499	4.50
@@ -1207,7 +1208,7 @@ COPY public.rams (id, title, brand_id, type_ram_id, volume, frequency, voltage, 
 7	Samsung DDR5	12	1	16	5600	1.10	40-40-40	39	https://avatars.mds.yandex.net/get-mpic/5346238/2a0000018e08fd4824e8738a1255c3528943/300x400	5199	4.80
 8	Kingston Fury Renegade	7	1	32	6000	1.30	38-38-38	36	https://ir.ozone.ru/s3/multimedia-c/c350/6321128724.jpg	9099	4.90
 9	Corsair Dominator Platinum RGB	8	1	64	6200	1.40	38-38-38	36	https://static.cdek.shopping/images/shopping/fw/300/300/103b2fe4108d4e5094dcfdbada3a3a42.jpg	19499	4.70
-10	Team Group T-Force Delta RGB	13	1	32	6000	1.30	38-38-38	36	https://c.dns-shop.ru/thumb/st1/fit/300/300/4a59fa2f3209597191c77888a2c15938/a1b64338ac3177e2d7d0451bb574db55e14d7a31a6cc1fbcc54926a619d5fcb6.jpg	10	4.80
+10	Team Group T-Force Delta RGB	13	1	32	6000	1.30	38-38-38	36	https://c.dns-shop.ru/thumb/st1/fit/300/300/4a59fa2f3209597191c77888a2c15938/a1b64338ac3177e2d7d0451bb574db55e14d7a31a6cc1fbcc54926a619d5fcb6.jpg	10999	4.80
 \.
 
 
@@ -1261,8 +1262,8 @@ COPY public.types_capacity (id, type_capacity) FROM stdin;
 
 COPY public.types_ram (id, type_ram) FROM stdin;
 1	DDR5
-2	DDR4 
 3	DDR3
+2	DDR4
 \.
 
 
@@ -1270,7 +1271,7 @@ COPY public.types_ram (id, type_ram) FROM stdin;
 -- Data for Name: videocards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.videocards (id, title, brand_id, videochipset_id, base_frequency, heatdiss, video_memory_capacity, type_capacity_id, max_power, max_frequency, interface_id, imageurl, price, rating) FROM stdin;
+COPY public.videocards (id, title, brand_id, videochipset_id, base_frequency, "TDP", video_memory_capacity, type_capacity_id, max_power, max_frequency, interface_id, imageurl, price, rating) FROM stdin;
 1	GIGABYTE GeForce RTX 3060 GAMING OC	2	1	1320	170	12	2	180	1837	1	https://avatars.mds.yandex.net/get-mpic/11375994/2a0000018b7183978b61c9a6ea307cb664a6/300x400	33999	4.80
 2	ASRock AMD Radeon RX 6600 Challenger White	3	2	1626	132	8	2	140	2491	2	https://avatars.mds.yandex.net/get-mpic/5129282/2a0000018dcca258a79152350ae4799d246d/300x400	24999	4.90
 3	GIGABYTE GeForce GTX 1660 SUPER D6	2	3	1530	125	6	2	125	1785	3	https://avatars.mds.yandex.net/get-mpic/9067823/2a0000018c86520f5bf3c8a084464586b8d5/300x400	25999	4.20
@@ -1323,7 +1324,7 @@ SELECT pg_catalog.setval('public.cooling_id_seq', 7, true);
 -- Name: cooling_socket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cooling_socket_id_seq', 11, true);
+SELECT pg_catalog.setval('public.cooling_socket_id_seq', 12, true);
 
 
 --
