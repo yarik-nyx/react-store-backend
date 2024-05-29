@@ -31,7 +31,7 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    heatdiss: {
+    TDP: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -47,7 +47,7 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.SMALLINT,
       allowNull: true
     },
-    iamgeurl: {
+    imageurl: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -55,7 +55,7 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    raing: {
+    rating: {
       type: DataTypes.DECIMAL,
       allowNull: true
     }

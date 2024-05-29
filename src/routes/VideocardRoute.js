@@ -4,3 +4,5 @@ import {videocardController} from '../controllers/VideocardController.js'
 export const videocardRouter = new Router()
 
 videocardRouter.get('/', videocardController.getAllItems)
+
+videocardRouter.get('/:id', videocardController.getItem)

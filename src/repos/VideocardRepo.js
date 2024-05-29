@@ -6,8 +6,59 @@ class VideocardRepo{
         this.models = initModels(db)
     }
 
-    async getAllItems(){
-        return await this.videocards.rams.findAll()
+    async getAllItems(search, sortby, order){
+        return await this.models.videocards.findAll({
+            where: search,
+            include:[{
+                model: this.models.brand,
+                as: 'brand',
+                attributes:['name']
+            },
+            {
+                model: this.models.videochipsets,
+                as: 'videochipset',
+                attributes:['videochipset']
+            },
+            {
+                model: this.models.interfaces,
+                as: 'interface',
+                attributes:['interface']
+            },
+            {
+                model: this.models.types_capacity,
+                as: 'type_capacity',
+                attributes:['type_capacity']
+            },
+            ],
+            order:[[sortby, order]]
+        })
+    }
+
+    async getItem(id){
+        return await this.models.videocards.findOne({
+            where: {id:id},
+            include:[{
+                model: this.models.brand,
+                as: 'brand',
+                attributes:['name']
+            },
+            {
+                model: this.models.videochipsets,
+                as: 'videochipset',
+                attributes:['videochipset']
+            },
+            {
+                model: this.models.interfaces,
+                as: 'interface',
+                attributes:['interface']
+            },
+            {
+                model: this.models.types_capacity,
+                as: 'type_capacity',
+                attributes:['type_capacity']
+            },
+            ],
+        })
     }
 }
 

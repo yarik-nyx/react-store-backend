@@ -58,8 +58,6 @@ function initModels(sequelize) {
   brand.hasMany(videocards, { as: "videocards", foreignKey: "brand_id"});
   motherboards.belongsTo(chipsets, { as: "chipset", foreignKey: "chipset_id"});
   chipsets.hasMany(motherboards, { as: "motherboards", foreignKey: "chipset_id"});
-  cooling_socket.belongsTo(cooling, { as: "cooling", foreignKey: "cooling_id"});
-  cooling.hasMany(cooling_socket, { as: "cooling_sockets", foreignKey: "cooling_id"});
   motherboards.belongsTo(form_factors, { as: "form _factor", foreignKey: "form _factor_id"});
   form_factors.hasMany(motherboards, { as: "motherboards", foreignKey: "form _factor_id"});
   videocards.belongsTo(interfaces, { as: "interface", foreignKey: "interface_id"});
@@ -84,18 +82,23 @@ function initModels(sequelize) {
   processors.belongsToMany(types, { through: proc_types, foreignKey: "proc_id", otherKey: "type_id", primaryKey: "id"});
   types.belongsToMany(processors, { through: proc_types, foreignKey: "type_id", otherKey: "proc_id", primaryKey: "id"});
 
+  // cooling_socket.belongsTo(sockets, { as: "socket", foreignKey: "socket_id"});
+  // sockets.hasMany(cooling_socket, { as: "cooling_sockets", foreignKey: "socket_id"});
+  // cooling_socket.belongsTo(cooling, { as: "cooling", foreignKey: "cooling_id"});
+  // cooling.hasMany(cooling_socket, { as: "cooling_sockets", foreignKey: "cooling_id"});
+
+  //Many-To-Many
+  sockets.belongsToMany(cooling, { through: cooling_socket, foreignKey: "socket_id", otherKey: "cooling_id", primaryKey: "id"});
+  cooling.belongsToMany(sockets, { through: cooling_socket, foreignKey: "cooling_id", otherKey: "socket_id", primaryKey: "id"});
 
   power_supplies.belongsTo(ps_certificates, { as: "certificate", foreignKey: "certificate_id"});
   ps_certificates.hasMany(power_supplies, { as: "power_supplies", foreignKey: "certificate_id"});
-  cooling_socket.belongsTo(sockets, { as: "socket", foreignKey: "socket_id"});
-  sockets.hasMany(cooling_socket, { as: "cooling_sockets", foreignKey: "socket_id"});
   motherboards.belongsTo(sockets, { as: "socket", foreignKey: "socket_id"});
   sockets.hasMany(motherboards, { as: "motherboards", foreignKey: "socket_id"});
   processors.belongsTo(sockets, { as: "socket", foreignKey: "socket_id"});
   sockets.hasMany(processors, { as: "processors", foreignKey: "socket_id"});
   cooling.belongsTo(type_cooling, { as: "type_cooling", foreignKey: "type_cooling_id"});
   type_cooling.hasMany(cooling, { as: "coolings", foreignKey: "type_cooling_id"});
-
   videocards.belongsTo(types_capacity, { as: "type_capacity", foreignKey: "type_capacity_id"});
   types_capacity.hasMany(videocards, { as: "videocards", foreignKey: "type_capacity_id"});
   motherboards.belongsTo(types_ram, { as: "type_ram", foreignKey: "type_ram_id"});

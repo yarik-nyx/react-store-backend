@@ -4,3 +4,5 @@ import {ramController} from '../controllers/RamController.js'
 export const ramRouter = new Router()
 
 ramRouter.get('/', ramController.getAllItems)
+
+ramRouter.get('/:id', ramController.getItem)

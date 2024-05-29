@@ -31,7 +31,7 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    heatdiss: {
+    TDP: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

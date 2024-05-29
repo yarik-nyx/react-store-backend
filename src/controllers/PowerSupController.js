@@ -4,8 +4,25 @@ class PowerSupController{
 
     async getAllItems(req, res, next){
         try {
-            const data = await powerSupService.getAllItems()
-            return res.status(200).json(data)
+            const{page, limit, search, sortby, order}=req.query
+            const data = await powerSupService.getAllItems(page, limit, search, sortby, order)
+            if(data){
+                return res.status(200).json(data)
+            }
+            return res.status(404)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getItem(req, res, next){
+        try {
+            const{id}=req.params
+            const data = await powerSupService.getItem(id)
+            if(data){
+                return res.status(200).json(data)
+            }
+            return res.status(404)
         } catch (error) {
             next(error)
         }

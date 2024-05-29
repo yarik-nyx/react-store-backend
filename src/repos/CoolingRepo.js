@@ -6,8 +6,57 @@ class CoolingRepo{
         this.models = initModels(db)
     }
 
-    async getAllItems(){
-        return await this.models.cooling.findAll()
+    async getAllItems(search, sortby, order){
+        return await this.models.cooling.findAll({
+            where: search,
+            include:[{
+                model: this.models.brand,
+                as: 'brand',
+                attributes:['name']
+            },
+            {
+                model: this.models.type_cooling,
+                as: 'type_cooling',
+                attributes:['type_cooling']
+            },
+            {
+                model: this.models.sockets,
+                as: 'sockets',
+                through: {
+                    model: this.models.cooling_socket,
+                    attributes: []
+                },
+                attributes: ['socket']
+            },
+            ],
+            order:[[sortby, order]]
+        })
+    }
+
+    async getItem(id){
+        return await this.models.cooling.findOne({
+            where: {id:id},
+            include:[{
+                model: this.models.brand,
+                as: 'brand',
+                attributes:['name']
+            },
+            {
+                model: this.models.type_cooling,
+                as: 'type_cooling',
+                attributes:['type_cooling']
+            },
+            {
+                model: this.models.sockets,
+                as: 'sockets',
+                through: {
+                    model: this.models.cooling_socket,
+                    attributes: []
+                },
+                attributes: ['socket']
+            },
+            ],
+        })
     }
 }
 
