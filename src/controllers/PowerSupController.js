@@ -1,4 +1,5 @@
 import {powerSupService} from '../services/PowerSupService.js'
+import { ApiError } from '../exceptions/ApiError.js'
 
 class PowerSupController{
 
@@ -9,7 +10,7 @@ class PowerSupController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }
@@ -22,7 +23,7 @@ class PowerSupController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }

@@ -1,4 +1,5 @@
 import {ramService} from '../services/RamService.js'
+import { ApiError } from '../exceptions/ApiError.js'
 
 class RamController{
 
@@ -9,7 +10,7 @@ class RamController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }
@@ -22,7 +23,7 @@ class RamController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }

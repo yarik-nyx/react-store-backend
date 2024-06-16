@@ -7,15 +7,12 @@ export class ApiError extends Error {
          this.erros = erros
     }
 
-    static UnathorizedError() {
-        return new ApiError(401, 'Пользователь не аутентифицирован')
-    } 
-
-    static ForbiddenError(){
-        return new ApiError(403, 'Пользователь не авторизован')
-    }
 
     static BadRequest(message, errors = []) {
         return new ApiError(400, message, errors)
     } 
+
+    static NotFound(){
+        return new ApiError(404, 'Не найдено')
+    }
 }

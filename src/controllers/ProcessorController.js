@@ -1,4 +1,5 @@
 import {processorService} from '../services/ProcessorService.js'
+import { ApiError } from '../exceptions/ApiError.js'
 
 class ProcessorController{
 
@@ -9,7 +10,7 @@ class ProcessorController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }
@@ -22,7 +23,7 @@ class ProcessorController{
             if(data){
                 return res.status(200).json(data)
             }
-            return res.status(404)
+            return next(ApiError.NotFound())
         } catch (error) {
             next(error)
         }

@@ -2,7 +2,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
 
+
 import {apiRouter} from './src/routes/Api.js'
+import {mailRouter} from './src/routes/MailRoute.js'
 import {coolingRouter} from './src/routes/CoolingRoute.js'
 import {motherboardRouter} from './src/routes/MotherboardRoute.js'
 import {powerSupRouter} from './src/routes/PowerSupRoute.js'
@@ -24,6 +26,7 @@ app.use((req, res, next) => {
     next();
   })
 
+app.use('/Mail', mailRouter)
 app.use('/Coolings',coolingRouter)
 app.use('/Motherboards',motherboardRouter)
 app.use('/PowerSupplies',powerSupRouter)
